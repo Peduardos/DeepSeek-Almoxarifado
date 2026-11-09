@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Almoxarifado</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Tela de Login -->
+  <section id="tela-login" class="tela ativa">
+    <div class="card-login">
+      <h1>Almoxarifado</h1>
+      <h2>Acesso ao Sistema</h2>
+
+      <form id="form-login" autocomplete="off">
+        <label for="input-usuario">Usuário</label>
+        <input type="text" id="input-usuario" placeholder="Digite seu usuário" required />
+
+        <label for="input-senha">Senha</label>
+        <input type="password" id="input-senha" placeholder="Digite sua senha" required />
+
+        <button type="submit">Entrar</button>
+      </form>
+
+      <p id="mensagem-login" class="mensagem-erro" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- Tela da Aplicação (após login) -->
+  <section id="tela-app" class="tela">
+    <header class="topo">
+      <h1>Almoxarifado</h1>
+
+      <button type="button" id="btn-menu-mobile" class="btn-menu-mobile" aria-label="Abrir menu">
+        ☰ Menu
+      </button>
+
+      <div class="info-usuario">
+        <span>Usuário: <strong id="nome-usuario"></strong></span>
+        <span>Perfil: <strong id="perfil-usuario"></strong></span>
+        <button id="btn-logout" type="button">Sair</button>
+      </div>
+    </header>
+
+    <div class="layout-app">
+
+      <!-- ================= MENU LATERAL ================= -->
+      <nav id="menu-principal" class="menu-principal" aria-label="Menu principal">
+        <div class="menu-grupo">
+          <h4>Principal</h4>
+          <button type="button" class="menu-item" data-menu="dashboard">Dashboard</button>
+        </div>
+
+        <div class="menu-grupo">
+          <h4>Produtos</h4>
+          <button type="button" class="menu-item" data-menu="consultar-produtos">Consultar Produtos</button>
+          <button type="button" class="menu-item" data-menu="cadastrar-produto" data-acesso="admin">Cadastrar Produto</button>
+        </div>
+
+        <div class="menu-grupo">
+          <h4>Movimentações</h4>
+          <button type="button" class="menu-item" data-menu="registrar-entrada" data-acesso="admin">Registrar Entrada</button>
+          <button type="button" class="menu-item" data-menu="registrar-saida" data-acesso="admin">Registrar Saída</button>
+          <button type="button" class="menu-item" data-menu="consultar-historico">Consultar Histórico</button>
+        </div>
+      </nav>
+
+      <!-- ================= CONTEÚDO ================= -->
+      <main class="conteudo">
+
+        <!-- Barra de mensagens globais -->
+        <div id="barra-mensagens" class="barra-mensagens" aria-live="polite"></div>
+
+        <!-- Painel de persistência -->
+        <div id="painel-persistencia" class="painel-persistencia" style="display:none;">
+          <span>💾 Os dados são salvos automaticamente neste navegador (localStorage).</span>
+          <button type="button" class="btn-limpar-dados" id="btn-limpar-dados">Limpar Dados</button>
+        </div>
+
+        <!-- ================= DASHBOARD ================= -->
+        <section id="area-dashboard" class="area-sistema ativa">
+          <h2>Dashboard</h2>
+          <p id="aviso-perfil" class="aviso-perfil" aria-live="polite"></p>
+
+          <div id="alertas-estoque" class="alertas-estoque"></div>
+
+          <div class="cards-dashboard">
+            <div class="card-resumo">
+              <span class="card-titulo">Produtos cadastrados</span>
+              <span class="card-valor" id="dash-total-produtos">0</span>
+            </div>
+            <div class="card-resumo">
+              <span class="card-titulo">Itens em estoque</span>
+              <span class="card-valor" id="dash-total-itens">0</span>
+            </div>
+            <div class="card-resumo card-alerta">
+              <span class="card-titulo">Estoque baixo</span>
+              <span class="card-valor" id="dash-estoque-baixo">0</span>
+            </div>
+            <div class="card-resumo card-perigo">
+              <span class="card-titulo">Sem estoque</span>
+              <span class="card-valor" id="dash-sem-estoque">0</span>
+            </div>
+          </div>
+
+          <div class="bloco-dashboard">
+            <h3>Movimentações recentes</h3>
+            <div class="tabela-scroll">
+              <table class="tabela-dashboard">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Tipo</th>
+                    <th>Produto</th>
+                    <th>Qtd.</th>
+                    <th>Usuário</th>
+                  </tr>
+                </thead>
+                <tbody id="dash-movimentacoes"></tbody>
+              </table>
+            </div>
+            <p id="dash-sem-movimentacoes" class="texto-vazio" style="display:none;">
+              Nenhuma movimentação registrada.
+            </p>
+          </div>
+        </section>
+
+        <!-- ================= ÁREA DE OPERAÇÕES ================= -->
+        <section id="area-operacao" class="area-sistema">
+          <div id="area-resultado" class="area-resultado"></div>
+        </section>
+
+      </main>
+    </div>
+  </section>
+
+  <!-- Modal de confirmação -->
+  <div id="modal-confirmacao" class="modal-fundo" style="display:none;">
+    <div class="modal-caixa">
+      <h3 id="modal-titulo">Confirmação</h3>
+      <p id="modal-mensagem"></p>
+      <div class="modal-acoes">
+        <button type="button" id="modal-cancelar" class="btn-secundario">Cancelar</button>
+        <button type="button" id="modal-confirmar" class="btn-perigo">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
